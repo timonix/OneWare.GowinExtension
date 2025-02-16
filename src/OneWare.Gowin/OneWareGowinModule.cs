@@ -12,7 +12,7 @@ using Prism.Modularity;
 
 namespace OneWare.Gowin;
 
-public class GowinModule : IModule
+public class OneWareGowinModule : IModule
 {
     public void RegisterTypes(IContainerRegistry containerRegistry)
     {
@@ -87,4 +87,5 @@ public class GowinModule : IModule
         if (!File.Exists(Path.Combine(path, "bin", $"programmer{PlatformHelper.ExecutableExtension}"))) return false;
         return true;
     }
+
 }

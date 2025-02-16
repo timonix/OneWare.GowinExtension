@@ -1,31 +1,31 @@
 {
   "category": "Toolchains",
   "type": "Plugin",
-  "name": "OneWare.GowinExtension Extension",
-  "id": "OneWare.GowinExtension",
-  "description": "OneWare.GowinExtension for OneWare",
+  "name": "OneWare.Gowin Extension",
+  "id": "OneWare.Gowin",
+  "description": "OneWare.Gowin for OneWare",
   "license": "MIT",
-  "iconUrl": "https://raw.githubusercontent.com/timonix/OneWare.GowinExtension/main/Icon.png",
+  "iconUrl": "https://raw.githubusercontent.com/timonix/OneWare.Gowin/main/Icon.png",
   "tabs": [
     {
       "title": "Readme",
-      "contentUrl": "https://raw.githubusercontent.com/timonix/OneWare.GowinExtension/main/Extension.md"
+      "contentUrl": "https://raw.githubusercontent.com/timonix/OneWare.Gowin/main/Extension.md"
     },
     {
       "title": "License",
-      "contentUrl": "https://raw.githubusercontent.com/timonix/OneWare.GowinExtension/main/License.md"
+      "contentUrl": "https://raw.githubusercontent.com/timonix/OneWare.Gowin/main/License.md"
     }
   ],
   "links": [
     {
       "name": "Github",
-      "url": "https://github.com/timonix/OneWare.GowinExtension"
+      "url": "https://github.com/timonix/OneWare.Gowin"
     }
   ],
-  "sourceUrl": "https://github.com/timonix/OneWare.GowinExtension/releases/download",
+  "sourceUrl": "https://github.com/timonix/OneWare.Gowin/releases/download",
   "versions": [
     {
-      "version": "0.1",
+      "version": "0.2",
       "minStudioVersion": "0.21.1.0",
       "targets": [
         {

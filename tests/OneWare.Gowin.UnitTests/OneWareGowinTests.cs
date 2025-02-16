@@ -1,8 +1,8 @@
 ﻿using Xunit;
 
-namespace OneWare.GowinExtension.UnitTests;
+namespace OneWare.Gowin.UnitTests;
 
-public class OneWareGowinExtensionTests
+public class OneWareGowinTests
 {
     //Add your unit tests here
     

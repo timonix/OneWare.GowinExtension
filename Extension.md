@@ -1,4 +1,4 @@
-![Icon](https://raw.githubusercontent.com/GithubUser/OneWare.GowinExtension/main/Icon.png)
+![Icon](https://raw.githubusercontent.com/GithubUser/OneWare.Gowin/main/Icon.png)
 
 ### Get Started
 
