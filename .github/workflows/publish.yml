@@ -24,6 +24,8 @@ jobs:
         id: get-version
         with:
           proj-path: src/OneWare.Gowin/OneWare.Gowin.csproj
+      - name: Restore Dependencies
+        run: dotnet restore src/OneWare.Gowin/OneWare.Gowin.csproj
       - name: Build
         run: dotnet build src/OneWare.Gowin/OneWare.Gowin.csproj -c Release --no-restore -o publish
       - name: Compress
