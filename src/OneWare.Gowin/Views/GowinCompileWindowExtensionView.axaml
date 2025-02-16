@@ -14,7 +14,7 @@
                     CommandParameter="{Binding #GowinCompileWindowExtensionViewView}">
                 <StackPanel Orientation="Horizontal" Spacing="5">
                     <TextBlock VerticalAlignment="Center" Text="Gowin Settings" />
-                    <Image Source="avares://OneWare.Gowin/Assets/icon.png" VerticalAlignment="Center"
+                    <Image Source="avares://OneWare.Gowin/Assets/Icon.png" VerticalAlignment="Center"
                            Height="20" />
                 </StackPanel>
             </Button>
