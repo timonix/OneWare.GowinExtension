@@ -23,9 +23,9 @@ jobs:
         uses: kzrnm/get-net-sdk-project-versions-action@v1.3.0
         id: get-version
         with:
-          proj-path: src/OneWare.GowinExtension/OneWare.GowinExtension.csproj
+          proj-path: src/OneWare.Gowin/OneWare.Gowin.csproj
       - name: Build
-        run: dotnet build src/OneWare.GowinExtension/OneWare.GowinExtension.csproj -c Release -o publish
+        run: dotnet build src/OneWare.Gowin/OneWare.Gowin.csproj -c Release -o publish
       - name: Compress
         uses: thedoctor0/zip-release@0.7.1
         with:
