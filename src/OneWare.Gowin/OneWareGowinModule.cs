@@ -38,7 +38,7 @@ public class OneWareGowinModule : IModule
         }));
         
         containerProvider.Resolve<FpgaService>().RegisterToolchain<GowinToolchain>();
-        containerProvider.Resolve<FpgaService>().RegisterLoader<GowinLoader>();
+        //containerProvider.Resolve<FpgaService>().RegisterLoader<GowinLoader>();
         
         settingsService.RegisterTitledFolderPath("Tools", "Gowin", "Gowin_Path", "Gowin IDE Path",
             "Sets the path for Gowin", "./", null, null, GowinIdePathValid);
