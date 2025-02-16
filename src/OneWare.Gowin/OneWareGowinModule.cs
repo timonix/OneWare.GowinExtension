@@ -28,17 +28,7 @@ public class OneWareGowinModule : IModule
             DataContext = containerProvider.Resolve<GowinCompileWindowExtensionViewModel>()
         }));
         
-        containerProvider.Resolve<IWindowService>().RegisterUiExtension("UniversalFpgaToolBar_DownloaderConfigurationExtension", new UiExtension(x =>
-        {
-            if (x is not UniversalFpgaProjectRoot cm) return null;
-            return new GowinLoaderWindowExtensionView()
-            {
-                DataContext = containerProvider.Resolve<GowinLoaderWindowExtensionViewModel>((typeof(UniversalFpgaProjectRoot), cm))
-            };
-        }));
-        
         containerProvider.Resolve<FpgaService>().RegisterToolchain<GowinToolchain>();
-        //containerProvider.Resolve<FpgaService>().RegisterLoader<GowinLoader>();
         
         settingsService.RegisterTitledFolderPath("Tools", "Gowin", "Gowin_Path", "Gowin IDE Path",
             "Sets the path for Gowin", "./", null, null, GowinIdePathValid);
