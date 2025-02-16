@@ -20,6 +20,12 @@
         <PackageReference Include="OneWare.UniversalFpgaProjectSystem" Version="0.41.4" Private="false" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Views\GowinLoaderSettingsView.axaml.cs">
+        <DependentUpon>GowinLoaderSettingsView.axaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
     <Target Name="GenerateCompatibilityFile" AfterTargets="Build">
         <ItemGroup>
             <FilteredDependencies Include="@(PackageReference)" Condition="'%(Private)' == 'false'"/>

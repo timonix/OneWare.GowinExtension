@@ -78,9 +78,18 @@ public class GowinToolchain(GowinService gowinService, ILogger logger) : IFpgaTo
         tcl.set_header(device, deviceName);
         
         tcl.RemoveFileAssignments();
+        
+        var allowedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ".cst", ".vhd", ".sv", ".v", ".vhdl", ".sdc"
+        };
+        
         foreach (var file in project.Files)
         {
-            tcl.AddFile(file);
+            if (allowedExtensions.Contains(file.Extension))
+            {
+                tcl.AddFile(file);
+            }
         }
         
         tcl.AddCst(topEntity);
