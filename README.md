@@ -8,12 +8,6 @@ This extension integrates the **GOWIN FPGA toolchain** into **OneWare Studio**.
 - 🎯 **Timing Constraints**: Allows adding **timing constraints** via `.sdc` files.
 - 🚀 **Simplified Workflow**: Enhances **OneWare Studio** with streamlined FPGA development.
 
-## Installation & Usage
-1. Install **OneWare Studio**.
-2. Add this extension to enable **GOWIN FPGA** support.
-3. Configure your project with `.vhd`, `.vhdl`, `.v`, `.sv`, `.sdc` files.
-4. Use the **GOWIN toolchain** for synthesis and programming.
-
 ## Notes
 - **SystemVerilog support is untested** but may work.
 - Contributions and feedback are welcome!
@@ -30,7 +24,8 @@ https://raw.githubusercontent.com/timonix/OneWare.GowinExtension/main/oneware-ex
 ### 2️⃣ Install the Extension
 1. Go to **Extras → Extensions**.
 2. Find and install **OneWare GOWIN Extension**.
-3. Restart **OneWare Studio** (if needed).
+3. Set the Path in **Settings -> Tools -> Gowin**
+4. Restart **OneWare Studio** (if needed).
 
 You're now ready to use the **GOWIN FPGA toolchain** inside OneWare Studio! 🚀
 
