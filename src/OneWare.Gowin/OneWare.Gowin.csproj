@@ -20,10 +20,6 @@
         <PackageReference Include="OneWare.UniversalFpgaProjectSystem" Version="0.41.4" Private="false" />
     </ItemGroup>
 
-    <ItemGroup>
-        <AvaloniaResource Include="Assets/icon.png"/>
-    </ItemGroup>
-
     <Target Name="GenerateCompatibilityFile" AfterTargets="Build">
         <ItemGroup>
             <FilteredDependencies Include="@(PackageReference)" Condition="'%(Private)' == 'false'"/>
