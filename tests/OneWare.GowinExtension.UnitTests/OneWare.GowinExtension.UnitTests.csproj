@@ -11,11 +11,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\OneWare.GowinExtension\OneWare.GowinExtension.csproj" />
+      <ProjectReference Include="..\..\src\OneWare.Gowin\OneWare.Gowin.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+      <PackageReference Include="OneWare.Settings" Version="0.31.4" />
+      <PackageReference Include="OneWare.UniversalFpgaProjectSystem" Version="0.41.4" />
       <PackageReference Include="xunit" Version="2.6.2" />
     </ItemGroup>
 

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneWare.GowinExtension.UnitTests", "tests\OneWare.GowinExtension.UnitTests\OneWare.GowinExtension.UnitTests.csproj", "{CF9E9C7A-A4F7-442B-8015-58D4DA4C6837}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneWare.GowinExtension", "src\OneWare.GowinExtension\OneWare.GowinExtension.csproj", "{393BAF19-4387-413C-AC2E-2D22577783FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneWare.Gowin", "src\OneWare.Gowin\OneWare.Gowin.csproj", "{393BAF19-4387-413C-AC2E-2D22577783FE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Properties", "Properties", "{66B7CCEF-7704-488B-BB9F-300E9516AFD0}"
 	ProjectSection(SolutionItems) = preProject

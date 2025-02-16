@@ -15,7 +15,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="OneWare.Essentials" Version="0.11.2" Private="false" ExcludeAssets="runtime;Native"/>
+        <PackageReference Include="OneWare.Essentials" Version="0.11.3" Private="false" ExcludeAssets="runtime;Native" />
+        <PackageReference Include="OneWare.Settings" Version="0.31.4" Private="false" />
+        <PackageReference Include="OneWare.UniversalFpgaProjectSystem" Version="0.41.4" Private="false" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets/icon.png"/>
     </ItemGroup>
 
     <Target Name="GenerateCompatibilityFile" AfterTargets="Build">
