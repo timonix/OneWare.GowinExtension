@@ -1,6 +1,8 @@
-﻿using OneWare.Essentials.Services;
+﻿using OneWare.Essentials.Models;
+using OneWare.Essentials.Services;
 using OneWare.Gowin.Helper;
 using OneWare.Gowin.Services;
+using OneWare.ProjectSystem.Models;
 using OneWare.UniversalFpgaProjectSystem.Models;
 using OneWare.UniversalFpgaProjectSystem.Parser;
 using OneWare.UniversalFpgaProjectSystem.Services;
@@ -81,7 +83,10 @@ public class GowinToolchain(GowinService gowinService, ILogger logger) : IFpgaTo
             tcl.AddFile(file);
         }
         
+        tcl.AddCst(topEntity);
+        
         TclHelper.WriteTcl(tclPath, tcl);
-        return Task.FromResult(true);
+        
+        return gowinService.CompileAsync(project, fpga);
     }
 }

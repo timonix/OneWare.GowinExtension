@@ -1,5 +1,10 @@
-﻿using Avalonia.Media;
+﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
+using Avalonia.Media;
+using Avalonia.Threading;
+using OneWare.Essentials.Enums;
 using OneWare.Essentials.Services;
+using OneWare.Gowin.Helper;
 using OneWare.UniversalFpgaProjectSystem.Models;
 
 namespace OneWare.Gowin.Services;
@@ -19,28 +24,53 @@ public class GowinService(IChildProcessService childProcessService, ILogger logg
         var start = DateTime.Now;
         outputService.WriteLine("Compiling...\n==================", Brushes.CornflowerBlue);
         
-        /*var (success, _) =await childProcessService.ExecuteShellAsync("quartus_sh",
-            ["--flow", "compile", Path.GetFileNameWithoutExtension(project.TopEntity.Header)],
-            project.FullPath, "Running Quartus Prime Shell...", AppState.Loading, true, (x) =>
+        var (success, _) = await childProcessService.ExecuteShellAsync(
+            "gw_sh.exe",                            // Executable to run
+            [TclHelper.GetTclPath(project)],                           // Arguments
+            project.FullPath,                       // Working directory
+            "Running Gowin Shell...",               // Status message
+            AppState.Loading,                        // Application state
+            true,                                    // Capture output
+            (x) =>
             {
+                
                 var output = x.TrimStart();
                 Dispatcher.UIThread.Post(() =>
                 {
-                    if(output.StartsWith("Error (")) outputService.WriteLine(x, Brushes.Red);
-                    else if(output.StartsWith("Warning (") || output.StartsWith("Critical Warning ("))  outputService.WriteLine(x, Brushes.Orange);
-                    else outputService.WriteLine(x);
+                    if (output.StartsWith("Error (")) 
+                        outputService.WriteLine(x, Brushes.Red);
+                    else if (output.StartsWith("Warning (") || output.StartsWith("Critical Warning ("))
+                    {
+                        outputService.WriteLine(x, Brushes.Orange);
+                    }
+                    else if (output.Contains("Generate file") && output.Contains("completed"))
+                    {
+                        // Extract file path
+                        var match = Regex.Match(output, @"Generate file\s+""(.*?)""\s+completed");
+                        if (match.Success)
+                        {
+                            string filePath = match.Groups[1].Value;
+                            outputService.WriteLine($"Generated File: \"{filePath}\"");
+                        }
+                        else
+                        {
+                            outputService.WriteLine(x);
+                        }
+                    }
                 });
+
+                
                 return true;
-            });
-        */
+            }
+        );
+
         var compileTime = DateTime.Now - start;
         
-        /*if(success)
+        if(success)
             outputService.WriteLine($"==================\n\nCompilation finished after {(int)compileTime.TotalMinutes:D2}:{compileTime.Seconds:D2}\n");
         else
             outputService.WriteLine($"==================\n\nCompilation failed after {(int)compileTime.TotalMinutes:D2}:{compileTime.Seconds:D2}\n", Brushes.Red);
-
-        return success;*/
-        return false;
+        
+        return success;
     }
 }

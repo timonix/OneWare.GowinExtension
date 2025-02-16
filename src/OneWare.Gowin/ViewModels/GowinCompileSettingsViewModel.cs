@@ -53,7 +53,6 @@ public class GowinCompileSettingsViewModel : FlexibleWindowViewModelBase
         
         _settings.Add(new TclSettingCheckbox(_tclFile,"gen_sdf","generate sdf file","",false));
         _settings.Add(new TclSettingCheckbox(_tclFile,"gen_posp","generate post-place file","",false));
-        _settings.Add(new TclSettingCheckbox(_tclFile,"gen_verilog_sim_netlist","generate post-pnr verilog simulation model file","",false));
 
         foreach (var setting in _settings)
         {

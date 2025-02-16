@@ -105,4 +105,8 @@ public class TclFile
         _files.Add($"add_file {file.RelativePath.ToUnixPath()}");
     }
     
+    public void AddCst(String name)
+    {
+        _files.Add($"add_file {name}.cst");
+    }
 }
