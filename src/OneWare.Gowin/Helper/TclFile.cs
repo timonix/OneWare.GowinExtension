@@ -102,6 +102,7 @@ public class TclFile
     
     public void AddFile(IProjectFile file)
     {
+        _files.RemoveAll(x => Regex.IsMatch(x, $@"\add_file\s+-{Regex.Escape(file.RelativePath.ToUnixPath())}\b"));
         _files.Add($"add_file {file.RelativePath.ToUnixPath()}");
     }
     

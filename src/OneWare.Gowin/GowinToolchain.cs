@@ -86,13 +86,15 @@ public class GowinToolchain(GowinService gowinService, ILogger logger) : IFpgaTo
         
         foreach (var file in project.Files)
         {
-            if (allowedExtensions.Contains(file.Extension))
+            if (allowedExtensions.Contains(file.Extension) && !project.CompileExcluded.Contains(file))
             {
                 tcl.AddFile(file);
             }
         }
         
         tcl.AddCst(topEntity);
+        
+        tcl.AddOption("top_module",topEntity);
         
         TclHelper.WriteTcl(tclPath, tcl);
         
