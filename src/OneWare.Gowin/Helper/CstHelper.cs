@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Drawing.Printing;
+using System.Text.RegularExpressions;
+using Avalonia.Media;
 using OneWare.UniversalFpgaProjectSystem.Models;
 
 namespace OneWare.Gowin.Helper;
@@ -7,7 +9,7 @@ public static partial class CstHelper
 {
     public static string GetCstPath(UniversalFpgaProjectRoot project)
     {
-        return Path.Combine(project.RootFolderPath, Path.GetFileNameWithoutExtension(project.TopEntity?.FullPath ?? throw new Exception("TopEntity not set!")) + ".cst");
+        return Path.ChangeExtension(project.TopEntity?.FullPath?? throw new Exception("TopEntity not set!"), ".cst");
     }
 
     public static CstFile ReadCst(string path)

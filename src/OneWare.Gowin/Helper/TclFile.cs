@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using OneWare.Essentials.Extensions;
 using OneWare.Essentials.Models;
+using OneWare.UniversalFpgaProjectSystem.Parser;
 
 namespace OneWare.Gowin.Helper;
 
@@ -9,8 +10,18 @@ public class TclFile
 
     public TclFile(string[] lines)
     {
-        if (lines == null) return;
+        updateContent(lines);
+    }
+    
+    private List<string> _options = new List<string>();
+    private List<string> _files = new List<string>();
+    
+    private string _device = string.Empty;
+    private string _deviceName = string.Empty;
 
+    public void updateContent(string[] lines)
+    {
+        if (lines == null) return;
         Regex optionRegex = new Regex(@"^\s*set_option\s+", RegexOptions.IgnoreCase);
         Regex fileRegex = new Regex(@"^\s*add_file\s+", RegexOptions.IgnoreCase);
 
@@ -18,27 +29,23 @@ public class TclFile
         {
             if (optionRegex.IsMatch(line))
             {
-                _options.Add(line);
+                var opt = line.Split(" ");
+                AddOption(opt[1].Replace("-",""),opt[2]);
             }
             else if (fileRegex.IsMatch(line))
             {
-                _files.Add(line);
+                var opt = line.Split(" ");
+                AddFile(opt[1]);
             }
         }
     }
-    
-    private List<string> _options = new List<string>();
-    private List<string> _files = new List<string>();
-    
-    private string device = string.Empty;
-    private string deviceName = string.Empty;
     
     
     public List<string> Lines
     {
         get
         {
-            string header = $"set_device {device} -name {deviceName}";
+            string header = $"set_device {_device} -name {_deviceName}";
             string footer = "run all";
             
             return new List<string> { header }
@@ -54,8 +61,8 @@ public class TclFile
 
     public void set_header(string device, string deviceName)
     {
-        this.device = device;
-        this.deviceName = deviceName;
+        _device = device;
+        _deviceName = deviceName;
     }
 
     public void RemoveOption(string propertyName)
@@ -106,8 +113,9 @@ public class TclFile
         _files.Add($"add_file {file.RelativePath.ToUnixPath()}");
     }
     
-    public void AddCst(String name)
+    public void AddFile(String relativePath)
     {
-        _files.Add($"add_file {name}.cst");
+        _files.RemoveAll(x => Regex.IsMatch(x, $@"\add_file\s+-{relativePath}\b"));
+        _files.Add($"add_file {relativePath}");
     }
 }

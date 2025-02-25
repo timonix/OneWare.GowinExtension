@@ -57,6 +57,10 @@ public class GowinService(IChildProcessService childProcessService, ILogger logg
                             outputService.WriteLine(x);
                         }
                     }
+                    else
+                    {
+                        outputService.WriteLine(output);
+                    }
                 });
 
                 

@@ -66,7 +66,6 @@ public class GowinCompileSettingsViewModel : FlexibleWindowViewModelBase
         {
             setting.Save();
         }
-        
         TclHelper.WriteTcl(_tclPath, _tclFile);
         Close(flexibleWindow);
     }

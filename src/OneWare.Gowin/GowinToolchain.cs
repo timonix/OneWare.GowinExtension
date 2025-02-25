@@ -20,8 +20,7 @@ public class GowinToolchain(GowinService gowinService, ILogger logger) : IFpgaTo
     }
 
     public void LoadConnections(UniversalFpgaProjectRoot project, FpgaModel fpga)
-    {
-        try
+    { try
         {
             var cstPath = CstHelper.GetCstPath(project);
             var cst = CstHelper.ReadCst(cstPath);
@@ -81,7 +80,7 @@ public class GowinToolchain(GowinService gowinService, ILogger logger) : IFpgaTo
         
         var allowedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            ".cst", ".vhd", ".sv", ".v", ".vhdl", ".sdc"
+            ".vhd", ".sv", ".v", ".vhdl", ".sdc"
         };
         
         foreach (var file in project.Files)
@@ -92,7 +91,8 @@ public class GowinToolchain(GowinService gowinService, ILogger logger) : IFpgaTo
             }
         }
         
-        tcl.AddCst(topEntity);
+        //add the cst corresponding to the top entity
+        tcl.AddFile(Path.ChangeExtension(project.TopEntity.RelativePath,".cst").Replace("\\","/"));
         
         tcl.AddOption("top_module",topEntity);
         
