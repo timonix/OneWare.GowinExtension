@@ -31,3 +31,8 @@ You're now ready to use the **GOWIN FPGA toolchain** inside OneWare Studio! 🚀
 
 [![Test](https://github.com/timonix/OneWare.GowinExtension/actions/workflows/test.yml/badge.svg)](https://github.com/timonix/OneWare.GowinExtension/actions/workflows/test.yml)
 [![Publish](https://github.com/timonix/OneWare.GowinExtension/actions/workflows/publish.yml/badge.svg)](https://github.com/timonix/OneWare.GowinExtension/actions/workflows/publish.yml)
+
+### Todo
+- Permanent programming
+- Better error messaging
+
