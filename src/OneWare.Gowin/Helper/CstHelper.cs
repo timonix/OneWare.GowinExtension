@@ -9,7 +9,7 @@ public static partial class CstHelper
 {
     public static string GetCstPath(UniversalFpgaProjectRoot project)
     {
-        return Path.ChangeExtension(project.TopEntity?.FullPath?? throw new Exception("TopEntity not set!"), ".cst");
+        return Path.Combine(project.RootFolderPath, Path.GetFileNameWithoutExtension(project.TopEntity ?? throw new Exception("TopEntity not set!")) + ".cst");
     }
 
     public static CstFile ReadCst(string path)

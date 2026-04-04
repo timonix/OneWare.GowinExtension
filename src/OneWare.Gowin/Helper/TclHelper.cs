@@ -8,7 +8,8 @@ public class TclHelper
 
     public static string GetTclPath(UniversalFpgaProjectRoot project)
     {
-        return Path.ChangeExtension(project.TopEntity?.FullPath?? throw new Exception("TopEntity not set!"), ".tcl");
+        return Path.Combine(project.RootFolderPath, Path.GetFileNameWithoutExtension(project.TopEntity ?? throw new Exception("TopEntity not set!")) + ".tcl");
+
     }
 
     public static TclFile ReadTcl(string path)

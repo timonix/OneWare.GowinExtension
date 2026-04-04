@@ -3,10 +3,10 @@
 This extension integrates the **GOWIN FPGA toolchain** into **OneWare Studio**.
 
 ## Features
-- 🖥️ **Cross-Platform Support**: Tested on **Windows**, should work on **macOS** and **Linux** as well.
-- 🔄 **Mixed Language Support**: Supports both **VHDL** and **Verilog** (SystemVerilog is untested).
-- 🎯 **Timing Constraints**: Allows adding **timing constraints** via `.sdc` files.
-- 🚀 **Simplified Workflow**: Enhances **OneWare Studio** with streamlined FPGA development.
+-  **Cross-Platform Support**: Tested on **Windows**, should work on **macOS** and **Linux** as well.
+- **Mixed Language Support**: Supports both **VHDL** and **Verilog** (SystemVerilog is untested).
+- **Timing Constraints**: Allows adding **timing constraints** via `.sdc` files.
+- **Simplified Workflow**: Enhances **OneWare Studio** with streamlined FPGA development.
 
 ## Installation & Usage
 1. Add this extension to enable **GOWIN FPGA** support.

@@ -1,82 +1,56 @@
-using OneWare.Essentials.Helpers;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Layout;
+using Avalonia.Media;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using OneWare.Essentials.Models;
 using OneWare.Essentials.Services;
-using OneWare.Essentials.ViewModels;
-using OneWare.Gowin.Services;
-using OneWare.Gowin.ViewModels;
-using OneWare.Gowin.Views;
 using OneWare.UniversalFpgaProjectSystem.Models;
 using OneWare.UniversalFpgaProjectSystem.Services;
-using Prism.Ioc;
-using Prism.Modularity;
+using OneWare.UniversalFpgaProjectSystem.ViewModels;
 
 namespace OneWare.Gowin;
-
-public class OneWareGowinModule : IModule
+public class OneWareGowinModule : OneWareModuleBase
 {
-    public void RegisterTypes(IContainerRegistry containerRegistry)
+    public override void RegisterServices(IServiceCollection services)
     {
-        containerRegistry.RegisterSingleton<GowinService>();
+        services.AddSingleton<GowinService>();
     }
 
-    public void OnInitialized(IContainerProvider containerProvider)
+    private static Image CreateIcon(string resourceKey)
     {
-        var settingsService = containerProvider.Resolve<ISettingsService>();
-        
-        containerProvider.Resolve<IWindowService>().RegisterUiExtension("CompileWindow_TopRightExtension", new UiExtension(x => new GowinCompileWindowExtensionView()
-        {
-            DataContext = containerProvider.Resolve<GowinCompileWindowExtensionViewModel>()
-        }));
-        
-        containerProvider.Resolve<FpgaService>().RegisterToolchain<GowinToolchain>();
-        containerProvider.Resolve<FpgaService>().RegisterLoader<GowinLoader>();
-        
-        settingsService.RegisterTitledFolderPath("Tools", "Gowin", "Gowin_Path", "Gowin IDE Path",
-            "Sets the path for Gowin", "./", null, null, GowinIdePathValid);
-        
-        settingsService.RegisterTitledFolderPath("Tools", "Gowin", "Gowin_programmer_Path", "Gowin Programmer Path",
-            "Sets the path for Gowin loader", "./", null, null, GowinProgrammerPathValid);
-        
-        settingsService.GetSettingObservable<string>("Gowin_Path").Subscribe(x =>
-        {
-            if (string.IsNullOrEmpty(x)) return;
+        var source = Application.Current!
+            .FindResource(Application.Current.RequestedThemeVariant, resourceKey) as IImage;
 
-            if (!GowinIdePathValid(x))
-            {
-                containerProvider.Resolve<ILogger>().Warning("Gowin path invalid", null, false);
-                return;
-            }
-            var binPath = Path.Combine(x, "bin");
-            ContainerLocator.Container.Resolve<IEnvironmentService>().SetPath("Gowin_Bin", binPath);
-        });
-        
-        settingsService.GetSettingObservable<string>("Gowin_programmer_Path").Subscribe(x =>
-        {
-            if (string.IsNullOrEmpty(x)) return;
-
-            if (!GowinProgrammerPathValid(x))
-            {
-                containerProvider.Resolve<ILogger>().Warning("Gowin programmer path invalid", null, false);
-                return;
-            }
-            var binPath = Path.Combine(x, "bin");
-            ContainerLocator.Container.Resolve<IEnvironmentService>().SetPath("Gowin_programmer_Bin", binPath);
-        });
-        
+        return new Image { Source = source };
     }
     
-    private static bool GowinIdePathValid(string path)
+    public override void Initialize(IServiceProvider serviceProvider)
     {
-        if (!Directory.Exists(path)) return false;
-        if (!File.Exists(Path.Combine(path, "bin", $"gw_sh{PlatformHelper.ExecutableExtension}"))) return false;
-        return true;
-    }
-    
-    private static bool GowinProgrammerPathValid(string path)
-    {
-        if (!Directory.Exists(path)) return false;
-        if (!File.Exists(Path.Combine(path, "bin", $"programmer{PlatformHelper.ExecutableExtension}"))) return false;
-        return true;
+        var settingsService = serviceProvider.Resolve<ISettingsService>();
+        var gowinService = serviceProvider.Resolve<GowinService>();
+        var environmentService = serviceProvider.Resolve<IEnvironmentService>();
+        var windowService = serviceProvider.Resolve<IWindowService>();
+        var projectExplorerService = serviceProvider.Resolve<IProjectExplorerService>();
+        var fpgaService = serviceProvider.Resolve<FpgaService>();
+        
+        serviceProvider.Resolve<FpgaService>().RegisterToolchain<GowinToolchain>();
+        
+        var compileMenuEntry = new OneWareUiExtension(x =>
+        {
+            if (x is not UniversalFpgaProjectRoot { Toolchain: GowinToolchain.ToolChainId } root) return null;
+
+            return new MenuItem
+            {
+                Header = "Gowin settings",
+                Icon = CreateIcon("Material.SettingsOutline")
+            };
+        });
+        
+        serviceProvider.Resolve<IWindowService>().RegisterUiExtension("UniversalFpgaToolBar_CompileMenuExtension",compileMenuEntry);
+
+
     }
 
 }
