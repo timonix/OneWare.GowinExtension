@@ -9,7 +9,7 @@ namespace OneWare.Gowin;
 
 public class GowinToolchain(GowinService gowinService) : IFpgaToolchain
 {
-    public const string ToolChainId = "Gowin_Toolchain";
+    public const string ToolChainId = "Gowin";
 
     public virtual string Id => ToolChainId;
     public string Name => "Gowin Toolchain";
