@@ -1,18 +1,19 @@
-﻿using OneWare.Essentials.Models;
+using Microsoft.Extensions.Logging;
 using OneWare.Essentials.Services;
 using OneWare.Gowin.Helper;
 using OneWare.Gowin.Services;
-using OneWare.ProjectSystem.Models;
 using OneWare.UniversalFpgaProjectSystem.Models;
-using OneWare.UniversalFpgaProjectSystem.Parser;
 using OneWare.UniversalFpgaProjectSystem.Services;
 
 namespace OneWare.Gowin;
 
-public class GowinToolchain(GowinService gowinService, ILogger logger) : IFpgaToolchain
+public class GowinToolchain(GowinService gowinService) : IFpgaToolchain
 {
+    public const string ToolChainId = "Gowin_Toolchain";
 
-    public string Name => "Gowin";
+    public virtual string Id => ToolChainId;
+    public string Name => "Gowin Toolchain";
+    
 
     public void OnProjectCreated(UniversalFpgaProjectRoot project)
     {
@@ -24,7 +25,6 @@ public class GowinToolchain(GowinService gowinService, ILogger logger) : IFpgaTo
         {
             var cstPath = CstHelper.GetCstPath(project);
             var cst = CstHelper.ReadCst(cstPath);
-        
             foreach (var (pin, node) in cst.GetLocationAssignments())
             {
 
@@ -36,7 +36,7 @@ public class GowinToolchain(GowinService gowinService, ILogger logger) : IFpgaTo
         }
         catch (Exception e)
         {
-            logger.Error(e.Message,e);
+            ContainerLocator.Container.Resolve<ILogger>().Error(e.Message, e);
         }
     }
 
@@ -57,47 +57,12 @@ public class GowinToolchain(GowinService gowinService, ILogger logger) : IFpgaTo
         }
         catch (Exception e)
         {
-            logger.Error("Error while saving connections",e);
+            ContainerLocator.Container.Resolve<ILogger>().Error(e.Message, e);
         }
     }
 
     public Task<bool> CompileAsync(UniversalFpgaProjectRoot project, FpgaModel fpga)
     {
-        var topEntity = project.TopEntity?.Header ?? throw new Exception("No TopEntity set!");
-        topEntity = Path.GetFileNameWithoutExtension(topEntity);
-            
-        var properties = FpgaSettingsParser.LoadSettings(project, fpga.Fpga.Name);
-
-        var tclPath = TclHelper.GetTclPath(project);
-        var tcl = TclHelper.ReadTcl(tclPath);
-
-        var device = properties.GetValueOrDefault("gowinDevice") ?? throw new Exception("No Device set!");
-        var deviceName = properties.GetValueOrDefault("gowinDeviceName") ?? throw new Exception("No Device name set!");
-        
-        tcl.set_header(device, deviceName);
-        
-        tcl.RemoveFileAssignments();
-        
-        var allowedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            ".vhd", ".sv", ".v", ".vhdl", ".sdc"
-        };
-        
-        foreach (var file in project.Files)
-        {
-            if (allowedExtensions.Contains(file.Extension) && !project.CompileExcluded.Contains(file))
-            {
-                tcl.AddFile(file);
-            }
-        }
-        
-        //add the cst corresponding to the top entity
-        tcl.AddFile(Path.ChangeExtension(project.TopEntity.RelativePath,".cst").Replace("\\","/"));
-        
-        tcl.AddOption("top_module",topEntity);
-        
-        TclHelper.WriteTcl(tclPath, tcl);
-        
         return gowinService.CompileAsync(project, fpga);
     }
 }

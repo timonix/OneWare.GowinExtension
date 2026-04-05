@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Version>0.4.218</Version>
-        <TargetFramework>net9.0</TargetFramework>
+        <Version>0.5.13</Version>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <EnableDynamicLoading>true</EnableDynamicLoading>
@@ -15,17 +15,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="OneWare.Essentials" Version="0.11.7" Private="false" ExcludeAssets="runtime;Native" />
-        <PackageReference Include="OneWare.Settings" Version="0.31.8" Private="false" />
-        <PackageReference Include="OneWare.UniversalFpgaProjectSystem" Version="0.41.8" Private="false" />
+        <PackageReference Include="OneWare.Essentials" Version="1.0.10" Private="false" ExcludeAssets="runtime;Native" />
+        <PackageReference Include="OneWare.UniversalFpgaProjectSystem" Version="1.0.10" Private="false" ExcludeAssets="runtime;Native" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Views\GowinLoaderSettingsView.axaml.cs">
-        <DependentUpon>GowinLoaderSettingsView.axaml</DependentUpon>
-      </Compile>
-    </ItemGroup>
-
+    
     <Target Name="GenerateCompatibilityFile" AfterTargets="Build">
         <ItemGroup>
             <FilteredDependencies Include="@(PackageReference)" Condition="'%(Private)' == 'false'"/>
