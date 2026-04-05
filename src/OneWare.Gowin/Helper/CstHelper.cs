@@ -11,11 +11,17 @@ public static partial class CstHelper
     {
         return Path.Combine(project.RootFolderPath, Path.GetFileNameWithoutExtension(project.TopEntity ?? throw new Exception("TopEntity not set!")) + ".cst");
     }
+    
+    public static string GetRelativeCstPath(UniversalFpgaProjectRoot project)
+    {
+        var absolutePath = GetCstPath(project);
+
+        return Path.GetRelativePath(project.RootFolderPath, absolutePath);
+    }
 
     public static CstFile ReadCst(string path)
     {
         var cst = File.Exists(path) ? File.ReadAllText(path) : string.Empty;
-
         return new CstFile(cst.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
     }
     

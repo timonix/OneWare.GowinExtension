@@ -1,10 +1,13 @@
 using Microsoft.Extensions.Logging;
 using OneWare.Essentials.Services;
 using OneWare.Gowin.Helper;
+using OneWare.Gowin.Services;
 using OneWare.UniversalFpgaProjectSystem.Models;
 using OneWare.UniversalFpgaProjectSystem.Services;
 
-public class GowinToolchain() : IFpgaToolchain
+namespace OneWare.Gowin;
+
+public class GowinToolchain(GowinService gowinService) : IFpgaToolchain
 {
     public const string ToolChainId = "Gowin_Toolchain";
 
@@ -60,6 +63,6 @@ public class GowinToolchain() : IFpgaToolchain
 
     public Task<bool> CompileAsync(UniversalFpgaProjectRoot project, FpgaModel fpga)
     {
-        return Task.FromResult(false);
+        return gowinService.CompileAsync(project, fpga);
     }
 }
